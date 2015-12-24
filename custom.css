@@ -1,0 +1,54 @@
+table {
+    background-color: rgba(255, 128, 32, 0.04);
+
+}
+
+th {
+    padding-right: 40px !important;
+    vertical-align: bottom;
+    border-style: none none dotted none;
+    border-color: #aaaaaa;
+    border-width: 1px;
+}
+
+td {
+    vertical-align: top;
+    border-style: none none dotted none;
+    border-color: #cccccc;
+    border-width: 1px;
+}
+
+/*For pretty caption overlays */
+
+div.image-wrapper{
+	float:left; /* important */
+	position:relative; /* important(so we can absolutely position the description div */
+    margin:1px 5px 0px 5px;
+}
+
+div.desc{
+    background-color: #000;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    color: white;
+    opacity: 0.7;
+    position: absolute;
+}
+
+.fix{
+    width: 100%;
+    padding: 0px;
+}
+
+p.desc_content{
+    padding:10px;
+    margin:0px;
+}
+
+.page-header{
+    padding-bottom:8px;
+    margin:10px 0 1px;
+    border-bottom:1px solid #dddddd;
+    border-top: 1px solid #dddddd
+}

@@ -1,0 +1,20 @@
+---
+
+# some test strings for https://regex101.com/#python
+# <p>[flickr:url=https://flic.kr/p/qoN1RX]</p>
+# <P>[flickr:url=http://flic.kr/p/qoN1RX]</p>
+# <P>[flickr:url=https://flic.kr/p/qoN1RX]  </p>
+# <p> [flickr:url=https://flic.kr/p/qoN1RX]</p>
+# <p>[flickr:url=http://flic.kr/p/qoN1RX,size=medium]</p>
+# <p>[flickr:id=12345678]</p>
+
+'<p>[flickr:url=https://flic.kr/p/qoN1RX,size=medium]</p>':
+  full_tag: '[flickr:url=https://flic.kr/p/qoN1RX,size=medium]'
+  size: medium
+  url: https://flic.kr/p/qoN1RX
+
+'<p>[flickr:url=https://flic.kr/p/qoN1RX,size=medium,caption=1]</p>':
+  full_tag: '[flickr:url=https://flic.kr/p/qoN1RX,size=medium,caption=1]'
+  size: medium
+  url: https://flic.kr/p/qoN1RX
+  caption: "1"

@@ -1,0 +1,19 @@
+---
+- input:
+    url: https://flic.kr/p/qoN1RX
+  expected:
+    id: '16010503393'
+    url: https://flic.kr/p/qoN1RX
+
+- input:
+    id: '16010503393'
+  expected:
+    id: '16010503393'
+    url: https://flic.kr/p/qoN1RX
+
+- input:
+    id: '16010503393'
+    url: https://flic.kr/p/qoN1RX
+  expected:
+    id: '16010503393'
+    url: https://flic.kr/p/qoN1RX

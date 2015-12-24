@@ -1,0 +1,6 @@
+venv3/
+venv2/
+
+/.tox
+*.pyc
+__pycache__
