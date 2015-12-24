@@ -1,7 +1,7 @@
 flickr_insert
 ==================
 
-The flickr_insert plugin for Pelican lets you the ability to insert Flickr images into static document content.
+The flickr_insert plugin for Pelican allows you to insert Flickr images into static document content.
 
 - Various image sizes are supported
 - Captions on the image can be turned on or off
