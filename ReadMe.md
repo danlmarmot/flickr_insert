@@ -18,7 +18,7 @@ clicking the forward button, and choosing 'Copy URL'.  It can also be found when
 
 ### More advanced usage
 
-Tags support additionalparameters, such as this tag:
+Tags support additional parameters, such as this tag:
 
 [flickr:url=https://flic.kr/p/BWmPQ5,size=small240,caption=true,float=right]
 

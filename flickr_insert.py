@@ -46,8 +46,8 @@ plugin_settings = {
                 int(14 * 86400),  # 14 days, for intermittent refreshes
             "field_names":  # cache file columns
                 ["title", "insert_image_url_base",
-                 "last_updated", "next_update",
-                 "last_updated_str", "next_update_str",
+                 "last_changed", "last_updated", "next_update",
+                 "last_changed_str", "last_updated_str", "next_update_str",
                  "flickr_error"]
         }
     }
@@ -340,14 +340,29 @@ def replace_tags_in_document(document, generator, cache):
 
         # Update cache item as needed
         if item_update['status'] == 'needs_update':
-            updated_item = get_info_from_flickr(
+            flickr_info = get_info_from_flickr(
                 flickr_ctx['flickr_conn'], photo[key_field])
 
-            if updated_item:
-                item_update.update(updated_item)
+            if flickr_info:
+                # Set a flag to indicate item hasn't changed if
+                # Flickr response is same as cached
+                unchanged = all(item in cache_entry.items() for item in
+                    flickr_info.items())
+
+                # Update with changed Flickr info as needed
+                if not unchanged:
+                    item_update.update(flickr_info)
+                    item_update.update({
+                        'last_changed': flickr_ctx['cur_time'],
+                        'last_changed_str': epoch_to_str(flickr_ctx[
+                                                            'cur_time']),
+                    })
+
+                # Set a next update time for revisiting this item
                 next_update_time = get_next_update_time(
                     flickr_ctx['cur_time'], cache_cfg)
 
+                # Add details about when this item was checked
                 item_update.update({
                     'last_updated': flickr_ctx['cur_time'],
                     'last_updated_str': epoch_to_str(flickr_ctx['cur_time']),
@@ -355,10 +370,11 @@ def replace_tags_in_document(document, generator, cache):
                     'next_update_str': epoch_to_str(next_update_time)
                 })
 
-                cache[photo[key_field]] = item_update
+                # Update the cache entry and photo dictionary
+                cache[photo[key_field]].update(item_update)
                 photo.update(item_update)
             else:
-                # todo: add additional error handling
+                # todo: add additional error handling when Flickr errs out
                 pass
 
         if item_update['status'] == 'ok':
@@ -397,9 +413,10 @@ def get_cache_update_for_item(cache_entry, cur_time, cache_cfg):
     cache_id = cache_entry[key_name]
     next_update_time = cur_time + cache_cfg['refresh_interval']
 
-    # If this pic was last updated recently, or has no last update
-    if item_last_updated > int(cur_time - cache_cfg['recent_interval']) \
-            or item_last_updated == 0:
+    # If the item was changed recently, or has no last changed entry
+    item_last_changed = make_int(cache_entry.get('last_changed', 0))
+    if item_last_changed > int(cur_time - cache_cfg['recent_interval'])\
+            or item_last_changed == 0:
         cache_update['status'] = 'needs_update'
         # Add randomness to smear out updates, for when large numbers of
         # items are recently added to cache
